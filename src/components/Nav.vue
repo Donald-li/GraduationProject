@@ -6,9 +6,9 @@
       class="el-menu-demo"
       mode="horizontal"
       @select="handleSelect"
-      background-color="#545c64"
-      text-color="#fff"
-      active-text-color="#ffd04b"
+      background-color="#409EFF"
+      text-color="#FFFFFF"
+      active-text-color="#FFFFFF"
       :router="true">
 <!--      主页-->
       <el-menu-item index="/index">

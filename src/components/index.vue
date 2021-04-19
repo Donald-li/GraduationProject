@@ -1,15 +1,19 @@
 <template>
   <div>
-    <h1>这是首页</h1>
+    <Head/>
+    <el-divider></el-divider>
   </div>
 </template>
 
 <script>
+import Head from "./Head";
 export default {
-  name: "index"
+  name: "index",
+  components:{
+    Head
+  }
 }
 </script>
 
 <style scoped>
-
 </style>

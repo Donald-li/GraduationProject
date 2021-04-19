@@ -7,7 +7,7 @@
       <el-main>
         <router-view/>
       </el-main>
-      <el-footer>Footer</el-footer>
+      <el-footer style="text-align: center;color: #ffffff"><h2 style="background-color: #D9ECFF;">Footer</h2></el-footer>
     </el-container>
   </div>
 </template>
