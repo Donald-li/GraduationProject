@@ -26,38 +26,8 @@
     </ul>
 
     <ul>
-      <li class="title_li">
-        <span class="title_span_2">体育</span>
-      </li>
-      <li class="title_li">
-        <span class="title_span_2">体育</span>
-      </li>
-      <li class="title_li">
-        <span class="title_span_2">体育</span>
-      </li>
-      <li class="title_li">
-        <span class="title_span_2">体育</span>
-      </li>
-      <li class="title_li">
-        <span class="title_span_2">体育</span>
-      </li>
-      <li class="title_li">
-        <span class="title_span_2">体育</span>
-      </li>
-      <li class="title_li">
-        <span class="title_span_2">体育</span>
-      </li>
-      <li class="title_li">
-        <span class="title_span_2">体育</span>
-      </li>
-      <li class="title_li">
-        <span class="title_span_2">体育</span>
-      </li>
-      <li class="title_li">
-        <span class="title_span_2">体育</span>
-      </li>
-      <li class="title_li">
-        <span class="title_span_2">体育</span>
+      <li class="title_li" v-for="t in blocks">
+        <a :href="'#'"><span class="title_span_2">{{ t }}</span></a>
       </li>
     </ul>
 
@@ -71,7 +41,12 @@
 
 <script>
 export default {
-  name: "index"
+  name: "index",
+  data(){
+    return{
+      blocks:['体育','经济','政治','地理','电影','游戏','音乐','舞蹈','美食','动漫']
+    }
+  }
 }
 </script>
 
