@@ -8,8 +8,8 @@
 <!--    走马灯-->
     <div class="carouselbox">
       <el-carousel height="300px">
-        <el-carousel-item v-for="item in 4" :key="item">
-          <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image">
+        <el-carousel-item v-for="(item,index) in carousel_images" :key="index" :label="index+1">
+          <img :src="item" class="image">
         </el-carousel-item>
       </el-carousel>
     </div>
@@ -47,7 +47,8 @@ export default {
   data() {
     return {
       currentDate: '2021.4.20',
-      titles:['体育','经济','政治','地理','电影','游戏','音乐','舞蹈','美食','动漫']
+      titles:['体育','经济','政治','地理','电影','游戏','音乐','舞蹈','美食','动漫'],
+      carousel_images:['../../static/images/NieR.jpg','../../static/images/NieR2.jpg','../../static/images/R姐.jpg','../../static/images/老虎.jpg']
     };
   }
 }
