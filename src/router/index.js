@@ -8,6 +8,7 @@ import Hot from "../components/Hot";
 import Reply from "../components/Reply";
 import Collect from "../components/Collect";
 import Focus from "../components/Focus";
+import Test from "../components/Test"
 
 //安装路由
 Vue.use(VueRouter);
@@ -59,6 +60,11 @@ export default new VueRouter({
       path:'/focus',
       name:'focus',
       component:Focus
+    },
+    {
+      path:'/test',
+      name:'test',
+      component:Test
     }
   ]
 })

@@ -56,7 +56,7 @@ export default {
   background-color: #ECF5FF;
 }
 .input-with-select{
-  width: 500px;
+  width: fit-content;
   height: 40px;
   float: right;
   margin-right: 10px;

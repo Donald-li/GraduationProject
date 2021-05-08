@@ -11,15 +11,18 @@
     </el-container>
 
     <el-backtop target=".page-component__scroll .el-scrollbar__wrap"></el-backtop>
+    <Test/>
   </div>
 </template>
 
 <script>
 import Nav from "./components/Nav";
+import Test from "./components/Test";
 
 export default {
   name: 'App',
   components: {
+    Test,
     Nav
   }
 }

@@ -19,11 +19,19 @@
         热点
       </el-menu-item>
 <!--      空白-->
-      <el-menu-item class="blocks" index="0" disabled>
-
+<!--&lt;!&ndash;      <el-menu-item class="blocks" index="0" disabled>&ndash;&gt;</el-menu-item>-->
+      <!--     头像 未登录-->
+      <el-menu-item v-if="currect_user===0" @click="dialogFormVisible = true">
+        <el-tooltip class="item" effect="dark" content="个人信息" placement="bottom">
+          <div class="demo-basic--circle">
+            <div class="block">
+              <el-avatar :size="large">登录</el-avatar>
+            </div>
+          </div>
+        </el-tooltip>
       </el-menu-item>
-<!--      头像-->
-      <el-menu-item index="/userInfo">
+      <!--      头像 登录-->
+      <el-menu-item v-if="currect_user!==0" index="/userInfo">
         <el-tooltip class="item" effect="dark" content="个人信息" placement="bottom">
           <div class="demo-basic--circle">
             <div class="block">
@@ -67,6 +75,22 @@
       </el-menu-item>
     </el-menu>
 <!--    <router-view/>-->
+    <!--登陆框-->
+          <el-dialog title="登陆" :visible.sync="dialogFormVisible" :width="formLabelWidth">
+            <el-form :model="form">
+              <el-form-item label="账号：" :width="formLabelWidth">
+                <el-input v-model="form.account" autocomplete="off"></el-input>
+              </el-form-item>
+              <el-form-item label="密码：" :width="formLabelWidth">
+                <el-input v-model="form.password" type="password" autocomplete="off"></el-input>
+              </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+              <el-button type="danger" @click="dialogFormVisible = false">注 册</el-button>
+              <el-button @click="dialogFormVisible = false">取 消</el-button>
+              <el-button type="primary" @click="dialogFormVisible = false" v-on:click="login()">确 定</el-button>
+            </div>
+          </el-dialog>
   </div>
 </template>
 
@@ -74,11 +98,19 @@
 export default {
   data() {
     return {
-      messageNumb:123,
+      //登陆框默认不显示
+      dialogFormVisible: false,
+      //登陆框输入框长度
+      formLabelWidth: '400px',
+      //登陆记录
+      currect_user:0,
+      //消息数
+      messageNumb:0,
       ishidden_msg:false,
       ishidden_res:false,
       avatar:'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
-      res:12,
+      //评论数
+      res:0,
       input: '',
       gridData: [{
         date: '2016-05-02',
@@ -92,7 +124,11 @@ export default {
       }, {
         date: '2016-05-03',
         name: '王小虎'
-      }]
+      }],
+      form: {
+        account:'',
+        password:'',
+      },
     };
   },
   methods: {
@@ -104,6 +140,30 @@ export default {
     },
     cleanres(){
       this.ishidden_res = true;
+    },
+    login(){
+      this.axios({
+        method:'post',
+        url:'/api/users/login',
+        data:{
+          account: this.form.account,
+          password: this.form.password
+        }
+      }).then((response)=>{
+        if(response.data.msg==null){
+          this.currect_user = response.data.account
+        }else{
+          alert(response.data.msg)
+        }
+      })
+    }
+  },
+  mounted() {
+    if(this.messageNumb===0){
+      this.ishidden_msg=true
+    }
+    if(this.res===0){
+      this.ishidden_res=true
     }
   }
 }
