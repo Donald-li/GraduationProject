@@ -4,25 +4,22 @@
       <el-header>
         <Nav/>
       </el-header>
-      <el-main>
-        <router-view/>
+      <el-main class="el-main">
+        <router-view class="main_view"/>
       </el-main>
       <el-footer style="text-align: center;color: #ffffff"><h2 style="background-color: #D9ECFF;">Footer</h2></el-footer>
     </el-container>
 
     <el-backtop target=".page-component__scroll .el-scrollbar__wrap"></el-backtop>
-    <Test/>
   </div>
 </template>
 
 <script>
 import Nav from "./components/Nav";
-import Test from "./components/Test";
 
 export default {
   name: 'App',
   components: {
-    Test,
     Nav
   }
 }
@@ -36,5 +33,12 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 10px;
+}
+.el-main{
+  text-align: center;
+}
+.main_view{
+  width: 80%;
+  padding-left: 10%;
 }
 </style>

@@ -11,18 +11,14 @@
       active-text-color="#FFFFFF"
       :router="true">
 <!--      主页-->
-      <el-menu-item index="/index">
+      <el-menu-item index="/index" :articles="articles">
         主页
-      </el-menu-item>
-<!--      热点-->
-      <el-menu-item index="/hot">
-        热点
       </el-menu-item>
 <!--      空白-->
 <!--&lt;!&ndash;      <el-menu-item class="blocks" index="0" disabled>&ndash;&gt;</el-menu-item>-->
       <!--     头像 未登录-->
       <el-menu-item v-if="currect_user===0" @click="dialogFormVisible = true">
-        <el-tooltip class="item" effect="dark" content="个人信息" placement="bottom">
+        <el-tooltip class="item" effect="dark" :content="userinfo" placement="bottom">
           <div class="demo-basic--circle">
             <div class="block">
               <el-avatar :size="large">登录</el-avatar>
@@ -32,7 +28,7 @@
       </el-menu-item>
       <!--      头像 登录-->
       <el-menu-item v-if="currect_user!==0" index="/userInfo">
-        <el-tooltip class="item" effect="dark" content="个人信息" placement="bottom">
+        <el-tooltip class="item" effect="dark" :content="userinfo" placement="bottom">
           <div class="demo-basic--circle">
             <div class="block">
               <el-avatar :size="large" :src="avatar">登录</el-avatar>
@@ -41,20 +37,20 @@
         </el-tooltip>
       </el-menu-item>
 
-<!--  消息-->
-      <el-menu-item index="/messagePage" @click="cleanmsg()">
-        <el-badge id="msg" :value="messageNumb" :max="99" class="item" :hidden="ishidden_msg">
-          <div>消息</div>
+<!--  动态-->
+      <el-menu-item v-if="currect_user!==0" index="/activePage" @click="cleanmsg()">
+        <el-badge id="active" :value="messageNumb" :max="99" class="item" :hidden="ishidden_msg">
+          <div>动态</div>
         </el-badge>
       </el-menu-item>
-<!--      回复-->
-      <el-menu-item index="/reply" @click="cleanres()">
-        <el-badge id="resbonse" v-model="res" :max="99" class="item" :hidden="ishidden_res">
-          <div>回复</div>
-        </el-badge>
-      </el-menu-item>
+<!--&lt;!&ndash;      回复&ndash;&gt;-->
+<!--      <el-menu-item v-if="currect_user!==0" index="/reply" @click="cleanres()">-->
+<!--        <el-badge id="resbonse" v-model="res" :max="99" class="item" :hidden="ishidden_res">-->
+<!--          <div>回复</div>-->
+<!--        </el-badge>-->
+<!--      </el-menu-item>-->
 <!--      收藏-->
-      <el-menu-item index="/collect">
+      <el-menu-item v-if="currect_user!==0" index="/collect">
         <el-popover trigger="hover" width="200px">
           <el-table :data="gridData">
             <el-table-column width="150" property="date" label="日期"></el-table-column>
@@ -64,7 +60,7 @@
         </el-popover>
       </el-menu-item>
 <!--      关注-->
-      <el-menu-item index="/focus">
+      <el-menu-item v-if="currect_user!==0" index="/focus">
         <el-popover trigger="hover" width="200px">
           <el-table :data="gridData">
             <el-table-column width="150" property="date" label="日期"></el-table-column>
@@ -91,6 +87,7 @@
               <el-button type="primary" @click="dialogFormVisible = false" v-on:click="login()">确 定</el-button>
             </div>
           </el-dialog>
+
   </div>
 </template>
 
@@ -98,6 +95,9 @@
 export default {
   data() {
     return {
+
+      //获取到的用户所属的文章
+      user_articles:'',
       //登陆框默认不显示
       dialogFormVisible: false,
       //登陆框输入框长度
@@ -106,6 +106,8 @@ export default {
       currect_user:0,
       //消息数
       messageNumb:0,
+      //头像提示信息
+      userinfo:'点击登陆',
       ishidden_msg:false,
       ishidden_res:false,
       avatar:'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
@@ -141,6 +143,7 @@ export default {
     cleanres(){
       this.ishidden_res = true;
     },
+    //登陆方法
     login(){
       this.axios({
         method:'post',
@@ -152,11 +155,13 @@ export default {
       }).then((response)=>{
         if(response.data.msg==null){
           this.currect_user = response.data.account
+          this.userinfo = "欢迎，"+response.data.user.name+"！"
+          this.user_articles = response.data.user_articles
         }else{
           alert(response.data.msg)
         }
       })
-    }
+    },
   },
   mounted() {
     if(this.messageNumb===0){

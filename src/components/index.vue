@@ -6,30 +6,30 @@
 
 <!--    主体部分-->
 <!--    走马灯-->
-    <div class="carouselbox">
-      <el-carousel height="300px">
-        <el-carousel-item v-for="(item,index) in carousel_images" :key="index" :label="index+1">
-          <img :src="item" class="image">
-        </el-carousel-item>
-      </el-carousel>
-    </div>
-<!--首页热点-->
-    <div class="headcard">
-      <div class="innercard"  v-for="index in 4">
-        <img class="innercard-img" src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png">
-        <div style="padding: 4px;">
-          <span>好吃的汉堡</span>
-          <div>
-            <time class="time">{{ currentDate }}</time>
-            <el-button type="text" class="button">操作按钮</el-button>
-          </div>
-        </div>
-      </div>
-    </div>
+<!--    <div class="carouselbox">-->
+<!--      <el-carousel height="300px">-->
+<!--        <el-carousel-item v-for="(item,index) in carousel_images" :key="index" :label="index+1">-->
+<!--          <img :src="item" class="image">-->
+<!--        </el-carousel-item>-->
+<!--      </el-carousel>-->
+<!--    </div>-->
+<!--&lt;!&ndash;首页热点&ndash;&gt;-->
+<!--    <div class="headcard">-->
+<!--      <div class="innercard"  v-for="index in 4">-->
+<!--        <img class="innercard-img" src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png">-->
+<!--        <div style="padding: 4px;">-->
+<!--          <span>好吃的汉堡</span>-->
+<!--          <div>-->
+<!--            <time class="time">{{ currentDate }}</time>-->
+<!--            <el-button type="text" class="button">操作按钮</el-button>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
 
-    <el-divider class="dividers"></el-divider>
+<!--    <el-divider class="dividers"></el-divider>-->
 
-    <Index_block v-for=" (title,index) in titles " :key="index" :title="title" ></Index_block>
+    <Index_block v-for=" (title,index) in titles " :key="index" :title="title" :titleindex="index+1"></Index_block>
 
   </div>
 </template>
@@ -47,8 +47,10 @@ export default {
   data() {
     return {
       currentDate: '2021.4.20',
-      titles:['体育','经济','政治','地理','电影','游戏','音乐','舞蹈','美食','动漫'],
-      carousel_images:['../../static/images/NieR.jpg','../../static/images/NieR2.jpg','../../static/images/R姐.jpg','../../static/images/老虎.jpg']
+      titles:['电影','游戏','音乐','舞蹈','美食','动漫'],
+      carousel_images:['../../static/images/NieR.jpg','../../static/images/NieR2.jpg','../../static/images/R姐.jpg','../../static/images/老虎.jpg'],
+      //获取的首页文章
+      index_articles:'',
     };
   }
 }
