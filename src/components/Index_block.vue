@@ -90,6 +90,11 @@ export default {
     //     return response.data
     //   })
     // }
+    //时间格式化
+    dateFormat:function(date){
+      return moment(date).format("YYYY年MM月DD日")
+    }
+
   },
   mounted() {
     this.init()

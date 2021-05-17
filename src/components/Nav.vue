@@ -27,11 +27,11 @@
         </el-tooltip>
       </el-menu-item>
       <!--      头像 登录-->
-      <el-menu-item v-if="currect_user!==0" index="/userInfo">
+      <el-menu-item v-if="currect_user!==0" :index="'/userInfo/'+loginuser.id">
         <el-tooltip class="item" effect="dark" :content="userinfo" placement="bottom">
           <div class="demo-basic--circle">
             <div class="block">
-              <el-avatar :size="large" :src="avatar">登录</el-avatar>
+              <el-avatar :size="large" :src="loginuser.img">登录</el-avatar>
             </div>
           </div>
         </el-tooltip>
@@ -96,6 +96,8 @@ export default {
   data() {
     return {
 
+      //登陆用户对象
+      loginuser:'',
       //获取到的用户所属的文章
       user_articles:'',
       //登陆框默认不显示
@@ -154,6 +156,7 @@ export default {
         }
       }).then((response)=>{
         if(response.data.msg==null){
+          this.loginuser = response.data.user
           this.currect_user = response.data.account
           this.userinfo = "欢迎，"+response.data.user.name+"！"
           this.user_articles = response.data.user_articles

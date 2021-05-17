@@ -7,7 +7,11 @@ import MessagePage from "../components/MessagePage";
 import Hot from "../components/Hot";
 import Reply from "../components/Reply";
 import Collect from "../components/Collect";
-import Focus from "../components/Focus";
+import Focus from "../components/UserInfoFocus";
+import UserInfoDetail from "../components/UserInfoDetail";
+import UserInfoArtciles from "../components/UserInfoArtciles";
+import UserInfoStar from "../components/UserInfoStar";
+import UserInfoFocus from "../components/UserInfoFocus"
 
 //安装路由
 Vue.use(VueRouter);
@@ -31,9 +35,44 @@ export default new VueRouter({
       component:indexPage
     },
     {
-      path:'/userInfo',
+      path:'/userInfo/:id',
       name:'userinfo',
-      component:UserInfo
+      props:true,
+      component:UserInfo,
+      children:[
+        {
+          path: 'detail/:userid',
+          props: {UserInfoDetail:true},
+          name: "userinfodetail",
+          components: {
+            UserInfoDetail: UserInfoDetail
+          }
+        },
+        {
+          path: 'articles/:userid',
+          props: {UserInfoDetail:true},
+          name: "userinfoarticles",
+          components: {
+            UserInfoDetail: UserInfoArtciles
+          }
+        },
+        {
+          path: 'focus/:userid',
+          props: {UserInfoDetail:true},
+          name: "userinfostars",
+          components: {
+            UserInfoDetail: UserInfoFocus
+          }
+        },
+        {
+          path: 'stars/:userid',
+          props: {UserInfoDetail:true},
+          name: "userinfostars",
+          components: {
+            UserInfoDetail: UserInfoStar
+          }
+        }
+      ]
     },
     {
       path:'/messagePage',
@@ -59,6 +98,6 @@ export default new VueRouter({
       path:'/focus',
       name:'focus',
       component:Focus
-    }
+    },
   ]
 })
