@@ -1,15 +1,18 @@
 <template>
   <div>
     <h3>已关注用户</h3>
-    <el-table :data="articles" class="blocks_table">
-      <el-table-column class="col" width="500" label="昵称">
+    <el-table :data="focus" class="blocks_table">
+      <el-table-column class="col" width="250"  prop="img" label="用户头像">
                 <template slot-scope="scope">
-                  <el-avatar :size="large" :src="user.img"></el-avatar>
-                  <i class="el-icon-edit"></i>
-                  <span>{{user.name}}</span>
+                  <el-avatar :size="large" :src="scope.row.user.img"></el-avatar>
                 </template>
       </el-table-column>
-      <el-table-column label="操作" prop="id">
+      <el-table-column class="col" width="250"  prop="name" label="用户昵称">
+        <template slot-scope="scope">
+          <span>{{scope.row.user.name}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button
             class="ac-btn"
@@ -37,10 +40,25 @@
 <script>
 export default {
   name: "Focus",
+  props:['userid'],
   data(){
     return{
-      pageTotal:1
+      pageTotal:1,
+      focus:''
     }
+  },
+  methods:{
+    getFollowers(){
+      this.axios({
+        method:"get",
+        url:"/api/users/get_follow_user/"+this.userid
+      }).then((e)=>{
+        this.focus = e.data
+      })
+    }
+  },
+  mounted() {
+    this.getFollowers()
   }
 }
 </script>
@@ -50,6 +68,6 @@ export default {
   margin-top: 7px;
 }
 .ac-btn{
-  float: right;
+  float: left;
 }
 </style>

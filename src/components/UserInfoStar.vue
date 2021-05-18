@@ -3,22 +3,22 @@
     <h3>已收藏文章</h3>
     <el-table :data="articles" class="blocks_table">
       <el-table-column class="col" width="150" label="作者">
-        <!--        <template slot-scope="scope">-->
-        <!--          <el-avatar :size="large" :src="user.img"></el-avatar>-->
-        <!--          <i class="el-icon-edit"></i>-->
-        <!--          <span>{{user.name}}</span>-->
-        <!--        </template>-->
+                <template slot-scope="scope">
+<!--                  <el-avatar :size="large" :src="scope.row.user.img"></el-avatar>-->
+                  <i class="el-icon-edit"></i>
+                  <span>{{scope.row.user.name}}</span>
+                </template>
       </el-table-column>
       <el-table-column class="col" width="150" prop="title" label="标题">
-        <!--            <template slot-scope="scope">-->
-        <!--              &lt;!&ndash;              <span>{{scope.row.title}}</span>&ndash;&gt;-->
-        <!--              <el-rate-->
-        <!--                v-model="scope.row.score"-->
-        <!--                disabled-->
-        <!--                show-score-->
-        <!--                text-color="#ff9900">-->
-        <!--              </el-rate>-->
-        <!--            </template>-->
+<!--                    <template slot-scope="scope">-->
+<!--                      &lt;!&ndash;              <span>{{scope.row.title}}</span>&ndash;&gt;-->
+<!--                      <el-rate-->
+<!--                        v-model="scope.row.score"-->
+<!--                        disabled-->
+<!--                        show-score-->
+<!--                        text-color="#ff9900">-->
+<!--                      </el-rate>-->
+<!--                    </template>-->
       </el-table-column>
       <el-table-column class="col" width="150" prop="score" label="评分">
         <template slot-scope="scope">
@@ -32,9 +32,9 @@
         </template>
       </el-table-column>
       <el-table-column class="col" prop="created_at" label="发布时间">
-        <template slot="header" slot-scope="scope">
+        <template slot-scope="scope">
           <i class="el-icon-time"></i>
-          <span>发布时间</span>
+          <span>{{formatter(scope.row.created_at,'yyyy年MM月dd日 hh:mm:ss')}}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" prop="id">
@@ -65,10 +65,47 @@
 <script>
 export default {
   name: "UserInfoStar",
+  props:['userid'],
   data(){
     return{
-      pageTotal:1
+      pageTotal:1,
+      articles:''
     }
+  },
+  methods:{
+    getStar_articles(){
+      this.axios({
+        method:"get",
+        url:"/api/users/get_star_articles/"+this.userid
+      }).then((e)=>{
+        this.articles = e.data
+      })
+    },
+    //时间格式化
+    formatter (thistime, fmt) {
+      let $this = new Date(thistime)
+      let o = {
+        'M+': $this.getMonth() + 1,
+        'd+': $this.getDate(),
+        'h+': $this.getHours(),
+        'm+': $this.getMinutes(),
+        's+': $this.getSeconds(),
+        'q+': Math.floor(($this.getMonth() + 3) / 3),
+        'S': $this.getMilliseconds()
+      }
+      if (/(y+)/.test(fmt)) {
+        fmt = fmt.replace(RegExp.$1, ($this.getFullYear() + '').substr(4 - RegExp.$1.length))
+      }
+      for (var k in o) {
+        if (new RegExp('(' + k + ')').test(fmt)) {
+          fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)))
+        }
+      }
+      return fmt
+    }
+  },
+  mounted() {
+    this.getStar_articles()
   }
 }
 </script>
