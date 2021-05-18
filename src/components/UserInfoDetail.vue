@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-button icon="el-icon-edit" class="edit-btn">修改</el-button>
+    <router-link :to="'/edituser/'+UserInfo.id"><el-button icon="el-icon-edit" class="edit-btn">修改</el-button></router-link>
     <h4 class="info_h">昵称：{{UserInfo.name}}</h4>
     <h4 class="info_h">账号：{{UserInfo.account}}</h4>
     <h4 class="info_h">角色：{{UserInfo.rule}}</h4>

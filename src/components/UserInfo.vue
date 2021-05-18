@@ -16,9 +16,10 @@
       <el-row class="tac">
         <el-col>
           <el-menu
+            :default-active="$router.currentRoute.path"
             class="el-menu-vertical-demo"
             :router="true">
-            <el-menu-item class="el-menu-item"  :index="'/userInfo/'+user.id+'/detail/'+user.id">
+            <el-menu-item class="el-menu-item"  :index="'/userInfo/'+user.id+'/detail/'+user.id" exact>
               <i class="el-icon-menu"></i>
               <span slot="title">详细信息</span>
             </el-menu-item >
