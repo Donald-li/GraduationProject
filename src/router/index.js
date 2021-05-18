@@ -12,6 +12,7 @@ import UserInfoDetail from "../components/UserInfoDetail";
 import UserInfoArtciles from "../components/UserInfoArtciles";
 import UserInfoStar from "../components/UserInfoStar";
 import UserInfoFocus from "../components/UserInfoFocus"
+import CreateUser from "../components/CreateUser";
 
 //安装路由
 Vue.use(VueRouter);
@@ -99,5 +100,10 @@ export default new VueRouter({
       name:'focus',
       component:Focus
     },
+    {
+      path:'/createuser',
+      name:'createuseer',
+      component:CreateUser
+    }
   ]
 })

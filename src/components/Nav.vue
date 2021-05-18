@@ -82,7 +82,7 @@
               </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
-              <el-button type="danger" @click="dialogFormVisible = false">注 册</el-button>
+              <router-link to="/createuser"><el-button type="danger" @click="dialogFormVisible = false">注 册</el-button></router-link>
               <el-button @click="dialogFormVisible = false">取 消</el-button>
               <el-button type="primary" @click="dialogFormVisible = false" v-on:click="login()">确 定</el-button>
             </div>
@@ -165,6 +165,9 @@ export default {
         }
       })
     },
+    goto(url){
+      this.$route.push(url)
+    }
   },
   mounted() {
     if(this.messageNumb===0){
