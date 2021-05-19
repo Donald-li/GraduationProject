@@ -69,6 +69,9 @@
           <div slot="reference">关注</div>
         </el-popover>
       </el-menu-item>
+      <el-menu-item v-if="currect_user!==0" :index="'/createarticle/'+loginuser.id">
+        <i class="el-icon-edit-outline"/>发表新文章
+      </el-menu-item>
     </el-menu>
 <!--    <router-view/>-->
     <!--登陆框-->

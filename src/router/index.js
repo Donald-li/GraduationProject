@@ -15,6 +15,7 @@ import UserInfoFocus from "../components/UserInfoFocus"
 import CreateUser from "../components/CreateUser";
 import EditUser from "../components/EditUser";
 import ShowArticle from "../components/ShowArticle";
+import CreateArticle from "../components/CreateArticle";
 
 //安装路由
 Vue.use(VueRouter);
@@ -118,6 +119,12 @@ export default new VueRouter({
       props:true,
       name:'showarticle',
       component:ShowArticle
+    },
+    {
+      path:'/createarticle/:id',
+      props:true,
+      name:'createarticle',
+      component:CreateArticle
     }
   ]
 })

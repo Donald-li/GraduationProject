@@ -1,9 +1,9 @@
 <template>
   <div>
-    <h1>标题:{{articles.title}}</h1>
+    <h1>{{articles.title}}</h1>
     <p>作者：{{articles.user.name}}</p>
-    <div>
-      {{articles.body}}
+    <div v-html="articles.body">
+<!--      {{articles.body}}-->
     </div>
     <div>
       {{articles.score}}
