@@ -56,8 +56,12 @@
       class="page"
       background
       hide-on-single-page
+      @current-change="current_page_change"
+      @prev-click="pnclick"
+      @next-click="pnclick"
+      :current-page="offset+1"
       layout="prev, pager, next"
-      :page-size="6"
+      :page-size="pagesize"
       :total="pageTotal">
     </el-pagination>
   </div>
@@ -124,9 +128,13 @@ export default {
           created_at: '2021-5-9'
         }
       ],
-      pageTotal:10,
+      pageTotal:30,
       //用户信息
       user:'',
+      //当前页面
+      offset:0,
+      //页面大小
+      pagesize:6
     }
   },
   methods:{
@@ -138,12 +146,14 @@ export default {
         this.user = e.data
       })
     },
-    getarticles(){
+    //初始化显示分页
+    getarticles(uid,offset,pagesize){
       this.axios({
         method:'get',
-        url:'/api/users/get_articles/'+this.userid
+        url:'/api/users/get_articles/'+uid+'/'+offset+'/'+pagesize
       }).then((e)=>{
-        this.articles = e.data
+        this.articles = e.data.articles
+        this.pageTotal = e.data.total
       })
     },
     //时间格式化
@@ -167,11 +177,19 @@ export default {
         }
       }
       return fmt
+    },
+    //点击页码跳转
+    current_page_change(page){
+      this.getarticles(this.userid,page-1,this.pagesize)
+    },
+    //点击前后页跳转
+    pnclick(page){
+      this.getarticles(this.userid,page-1,this.pagesize)
     }
   },
   mounted() {
     this.getuser()
-    this.getarticles()
+    this.getarticles(this.userid,this.offset,this.pagesize)
   }
 }
 </script>

@@ -115,6 +115,6 @@ export default {
   margin-left: 20px;
 }
 .body_card{
-  min-height: 500px;
+  min-height: 600px;
 }
 </style>

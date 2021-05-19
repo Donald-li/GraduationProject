@@ -42,11 +42,12 @@ export default {
   mounted: function() {
     that = this;
     editor = new E(that.$refs.editor);
+    // 配置 server 接口地址
     editor.config.uploadImgServer = '/api/articles/upload_img'
-    editor.config.uploadFileName = 'image'
-    editor.config.uploadImgHeaders = {
-      Accept: 'multipart/form-data',
-    }
+    editor.config.uploadVideoServer = '/api/articles/upload_img'
+    editor.config.uploadVideoName = 'file'
+    editor.config.uploadFileName = 'file'
+
     editor.config.onchange = function(html) {
       that.article.body=html;
       console.log('change 之后最新的 html', html)
