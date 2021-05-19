@@ -6,7 +6,7 @@
     </h3>
     <el-divider class="dividers"></el-divider>
 
-    <el-table :data="index_articles" class="blocks_table">
+    <el-table :data="index_articles" class="blocks_table" @row-click="overclick">
       <el-table-column class="col" width="300" prop="user" label="作者">
         <template slot-scope="scope">
           <el-avatar :size="large" :src="scope.row.user.img"></el-avatar>
@@ -93,6 +93,14 @@ export default {
     //时间格式化
     dateFormat:function(date){
       return moment(date).format("YYYY年MM月DD日")
+    },
+    //表格点击事件
+    overclick(row){
+      if(row){
+        this.$router.push({
+          path:'/showartilce/'+row.id,
+        })
+      }
     }
 
   },

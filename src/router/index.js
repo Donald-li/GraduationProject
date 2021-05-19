@@ -14,6 +14,7 @@ import UserInfoStar from "../components/UserInfoStar";
 import UserInfoFocus from "../components/UserInfoFocus"
 import CreateUser from "../components/CreateUser";
 import EditUser from "../components/EditUser";
+import ShowArticle from "../components/ShowArticle";
 
 //安装路由
 Vue.use(VueRouter);
@@ -111,6 +112,12 @@ export default new VueRouter({
       props:true,
       name:'edituser',
       component:EditUser
+    },
+    {
+      path:'/showartilce/:aid',
+      props:true,
+      name:'showarticle',
+      component:ShowArticle
     }
   ]
 })
