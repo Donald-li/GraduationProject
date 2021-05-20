@@ -168,8 +168,19 @@ export default {
         }
       })
     },
-    goto(url){
-      this.$route.push(url)
+    //初始化登陆方法
+    inituser(){
+      this.axios({
+        method:'get',
+        url:'/api/users/current_user'
+      }).then((e)=>{
+        if(e.data.msg == 1){
+          this.loginuser = e.data.user
+          this.currect_user = e.data.user.account
+          this.userinfo = "欢迎，"+e.data.user.name+"！"
+          this.user_articles = e.data.user_articles
+        }
+      })
     }
   },
   mounted() {
@@ -179,6 +190,7 @@ export default {
     if(this.res===0){
       this.ishidden_res=true
     }
+    this.inituser()
   }
 }
 </script>

@@ -47,7 +47,7 @@
             class="ac-btn"
             size="mini"
             type="danger"
-            @click="handleDelete(scope.id, scope.row)">删除</el-button>
+            @click="handleDelete(scope.row.id)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -185,7 +185,38 @@ export default {
     //点击前后页跳转
     pnclick(page){
       this.getarticles(this.userid,page-1,this.pagesize)
-    }
+    },
+    //表格点击跳转
+    overclick(row){
+      if(row){
+        this.$router.push({
+          path:'/showartilce/'+row.id,
+        })
+      }
+    },
+    handleDelete(id){
+      this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.axios({
+          method:'delete',
+          url:'/api/articles/'+id
+        }).then((e)=>{
+          this.$message({
+            type: 'success',
+            message: e.data.msg
+          });
+          this.getarticles(this.userid,this.offset,this.pagesize)
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        });
+      });
+    },
   },
   mounted() {
     this.getuser()
