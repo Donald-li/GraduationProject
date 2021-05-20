@@ -18,7 +18,7 @@
             class="ac-btn"
             size="mini"
             type="danger"
-            @click="handleDelete(scope.id, scope.row)">删除</el-button>
+            @click="handleDelete(scope.row.user.id,userid)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -50,6 +50,19 @@ export default {
         url:"/api/users/get_follow_user/"+this.userid
       }).then((e)=>{
         this.focus = e.data
+      })
+    },
+    handleDelete(uid,fid){
+      this.axios({
+        method:'delete',
+        url:'/api/users/unfocues/'+uid+'/'+fid
+      }).then((e)=>{
+        if(e.data.msg == '删除成功！'){
+          this.$message.info(e.data.msg)
+        }else {
+          this.$message.warning(e.data.msg)
+        }
+        this.getFollowers()
       })
     }
   },
