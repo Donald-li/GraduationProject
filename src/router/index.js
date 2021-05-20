@@ -17,6 +17,8 @@ import EditUser from "../components/EditUser";
 import ShowArticle from "../components/ShowArticle";
 import CreateArticle from "../components/CreateArticle";
 import EditArticle from "../components/EditArticle";
+import SearchList from "../components/SearchList";
+import Active from "../components/Active";
 
 //安装路由
 Vue.use(VueRouter);
@@ -132,6 +134,18 @@ export default new VueRouter({
       props:true,
       name:'editarticle',
       component:EditArticle
+    },
+    {
+      path:'/search/:array',
+      props:true,
+      name:'search',
+      component:SearchList
+    },
+    {
+      path:'/active/:id',
+      props:true,
+      name:'active',
+      component:Active
     }
   ]
 })

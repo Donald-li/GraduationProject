@@ -5,21 +5,21 @@
       <li class="title_li">
         <a href="/hot">
           <!--          <i class="title_icon el-icon-message"></i>-->
-          <el-avatar class="title_icon" icon="el-icon-message"></el-avatar>
-          <span class="title_span">消息</span>
+          <el-avatar class="title_icon" icon="el-icon-chat-dot-round"></el-avatar>
+          <span class="title_span">动态</span>
         </a>
       </li>
       <li class="title_li">
         <a href="#">
           <!--          <i class="el-icon-chat-dot-round title_icon"></i>-->
-          <el-avatar class=" title_icon" icon="el-icon-chat-dot-round"></el-avatar>
-          <span class="title_span">回复</span>
+          <el-avatar class=" title_icon" icon="el-icon-star-off"></el-avatar>
+          <span class="title_span">收藏</span>
         </a>
       </li>
       <li class="title_li">
         <a href="#">
           <!--          <i class="el-icon-chat-dot-round title_icon"></i>-->
-          <el-avatar class=" title_icon" icon="el-icon-chat-dot-round"></el-avatar>
+          <el-avatar class=" title_icon" icon="el-icon-thumb"></el-avatar>
           <span class="title_span">关注</span>
         </a>
       </li>
@@ -32,8 +32,8 @@
     </ul>
 
     <!--搜索框-->
-    <el-input class="input-with-select" placeholder="搜索内容">
-      <el-button class="input-btn" slot="append" icon="el-icon-search"></el-button>
+    <el-input class="input-with-select" v-model="searcharray" placeholder="搜索内容">
+      <el-button class="input-btn" slot="append" icon="el-icon-search" @click="search(searcharray)"></el-button>
     </el-input>
 
   </div>
@@ -44,7 +44,14 @@ export default {
   name: "index",
   data(){
     return{
-      blocks:['电影','游戏','音乐','舞蹈','美食','动漫']
+      blocks:['电影','游戏','音乐','舞蹈','美食','动漫'],
+      //搜索条件
+      searcharray:''
+    }
+  },
+  methods:{
+    search(array){
+      this.$router.push('/search/'+array)
     }
   }
 }

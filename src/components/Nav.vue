@@ -38,7 +38,7 @@
       </el-menu-item>
 
 <!--  动态-->
-      <el-menu-item v-if="currect_user!==0" index="/activePage" @click="cleanmsg()">
+      <el-menu-item v-if="currect_user!==0" :index="'/active/'+loginuser.id" @click="cleanmsg()">
         <el-badge id="active" :value="messageNumb" :max="99" class="item" :hidden="ishidden_msg">
           <div>动态</div>
         </el-badge>
