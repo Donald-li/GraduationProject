@@ -1,7 +1,9 @@
 <template>
   <div>
     <h1>{{articles.title}}</h1>
-    <div style="overflow: auto"><p style="text-align: right;width: 50%;float: left">作者：{{articles.user.name}} </p><el-button v-if="articles.user.id != this.$session.get('user_id')" style="float: left;margin-top: 15px;margin-left: 5px" size="mini" round>关注</el-button></div>
+    <div style="overflow: auto">
+      <p style="text-align: right;width: 50%;float: left">作者：{{articles.user.name}} </p>
+      <el-button class="focues_btn" @click="focues(articles.user.id,login_id)" v-if="articles.user.id != login_id" style="float: left;margin-top: 15px;margin-left: 5px" size="mini" round>关注</el-button></div>
     <div v-html="articles.body">
 <!--      {{articles.body}}-->
     </div>
@@ -25,6 +27,7 @@ export default {
   props:['aid'],
   data(){
     return{
+      login_id:this.$session.get("user_id"),
       articles:[
         {
           id:'',
@@ -76,6 +79,19 @@ export default {
       }
       return fmt
     },
+    //关注方法
+    focues(uid,fid){
+      this.axios({
+        method:'get',
+        url:'/api/users/focues_user/'+uid+'/'+fid
+      }).then((e)=>{
+        if(e.data.msg == '关注成功！'){
+          this.$message.success(e.data.msg)
+        }else {
+          this.$message.warning(e.data.msg)
+        }
+      })
+    }
   },
   mounted() {
     this.initArticle()

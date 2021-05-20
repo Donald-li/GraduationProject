@@ -17,10 +17,6 @@
           <el-button
             class="ac-btn"
             size="mini"
-            @click="handleEdit(scope.id, scope.row)">编辑</el-button>
-          <el-button
-            class="ac-btn"
-            size="mini"
             type="danger"
             @click="handleDelete(scope.id, scope.row)">删除</el-button>
         </template>
