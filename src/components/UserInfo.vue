@@ -8,6 +8,7 @@
         <div class="block"><el-avatar :size="150" :src="user.img"></el-avatar></div>
       </div>
       <h1 style=" color: white">{{user.name}}</h1>
+      <el-button type="warning" plain round @click="logout">退出登陆</el-button>
     </el-card>
 
     <el-divider/>
@@ -72,6 +73,12 @@ export default {
       }).then((e)=>{
         this.user = e.data
       })
+    },
+    //登出方法
+    logout(){
+      this.$session.remove("user_id")
+      this.$router.push('/')
+      location.reload()
     }
   },
   mounted() {

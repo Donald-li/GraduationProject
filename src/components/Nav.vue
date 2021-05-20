@@ -187,7 +187,7 @@ export default {
           }
         })
       }else {
-        alert("未登录！")
+        this.$message.info("未登录，请先登陆！")
       }
     }
   },
