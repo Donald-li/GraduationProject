@@ -68,6 +68,7 @@ export default new VueRouter({
           props: {UserInfoDetail:true},
           name: "userinfostars",
           components: {
+            default:UserInfoFocus,
             UserInfoDetail: UserInfoFocus
           }
         },

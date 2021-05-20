@@ -18,7 +18,7 @@
             class="ac-btn"
             size="mini"
             type="danger"
-            @click="handleDelete(scope.row.user.id,userid)">删除</el-button>
+            @click="handleDelete(scope.row.user.id,userid)">取消关注</el-button>
         </template>
       </el-table-column>
     </el-table>

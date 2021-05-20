@@ -54,9 +54,9 @@
         收藏
       </el-menu-item>
 <!--      关注-->
-      <el-menu-item v-if="currect_user!==0" index="/focus">
-        关注
-      </el-menu-item>
+<!--      <el-menu-item v-if="currect_user!==0" :index="'/focus/'+loginuser.id">-->
+<!--        关注-->
+<!--      </el-menu-item>-->
       <el-menu-item v-if="currect_user!==0" :index="'/createarticle/'+loginuser.id">
         <i class="el-icon-edit-outline"/>发表新文章
       </el-menu-item>
