@@ -6,7 +6,10 @@
 <!--      {{articles.body}}-->
     </div>
     <div>
-      {{articles.score}}
+      <el-rate
+        v-model="articles.score"
+        :colors="colors">
+      </el-rate>
     </div>
   </div>
 </template>

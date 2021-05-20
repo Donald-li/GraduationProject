@@ -16,6 +16,7 @@ import CreateUser from "../components/CreateUser";
 import EditUser from "../components/EditUser";
 import ShowArticle from "../components/ShowArticle";
 import CreateArticle from "../components/CreateArticle";
+import EditArticle from "../components/EditArticle";
 
 //安装路由
 Vue.use(VueRouter);
@@ -125,6 +126,12 @@ export default new VueRouter({
       props:true,
       name:'createarticle',
       component:CreateArticle
+    },
+    {
+      path:'/editarticle/:uid/:aid',
+      props:true,
+      name:'editarticle',
+      component:EditArticle
     }
   ]
 })

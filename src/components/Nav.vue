@@ -51,23 +51,11 @@
 <!--      </el-menu-item>-->
 <!--      收藏-->
       <el-menu-item v-if="currect_user!==0" index="/collect">
-        <el-popover trigger="hover" width="200px">
-          <el-table :data="gridData">
-            <el-table-column width="150" property="date" label="日期"></el-table-column>
-            <el-table-column width="100" property="name" label="姓名"></el-table-column>
-          </el-table>
-          <div slot="reference">收藏</div>
-        </el-popover>
+        收藏
       </el-menu-item>
 <!--      关注-->
       <el-menu-item v-if="currect_user!==0" index="/focus">
-        <el-popover trigger="hover" width="200px">
-          <el-table :data="gridData">
-            <el-table-column width="150" property="date" label="日期"></el-table-column>
-            <el-table-column width="100" property="name" label="姓名"></el-table-column>
-          </el-table>
-          <div slot="reference">关注</div>
-        </el-popover>
+        关注
       </el-menu-item>
       <el-menu-item v-if="currect_user!==0" :index="'/createarticle/'+loginuser.id">
         <i class="el-icon-edit-outline"/>发表新文章

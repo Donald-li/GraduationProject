@@ -42,7 +42,7 @@
           <el-button
             class="ac-btn"
             size="mini"
-            @click="handleEdit(scope.id, scope.row)">编辑</el-button>
+            @click="handleEdit(scope.row.id)">编辑</el-button>
           <el-button
             class="ac-btn"
             size="mini"
@@ -217,6 +217,10 @@ export default {
         });
       });
     },
+    //编辑方法
+    handleEdit(aid){
+      this.$router.push('/editarticle/'+this.userid+"/"+aid)
+    }
   },
   mounted() {
     this.getuser()
