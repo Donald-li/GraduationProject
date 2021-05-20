@@ -159,6 +159,7 @@ export default {
         }
       }).then((response)=>{
         if(response.data.msg==null){
+          this.$session.set('user_id',response.data.user.id)
           this.loginuser = response.data.user
           this.currect_user = response.data.account
           this.userinfo = "欢迎，"+response.data.user.name+"！"
@@ -170,17 +171,24 @@ export default {
     },
     //初始化登陆方法
     inituser(){
-      this.axios({
-        method:'get',
-        url:'/api/users/current_user'
-      }).then((e)=>{
-        if(e.data.msg == 1){
-          this.loginuser = e.data.user
-          this.currect_user = e.data.user.account
-          this.userinfo = "欢迎，"+e.data.user.name+"！"
-          this.user_articles = e.data.user_articles
-        }
-      })
+      if(this.$session.get('user_id')!=null){
+        this.axios({
+          method:'get',
+          url:'/api/users/get_session_user/'+this.$session.get("user_id")
+        }).then((e)=>{
+          if(e.data.msg==null){
+            // this.$session.set('user_id',e.data.user.id)
+            this.loginuser = e.data.user
+            this.currect_user = e.data.user.account
+            this.userinfo = "欢迎，"+e.data.user.name+"！"
+            this.user_articles = e.data.user_articles
+          }else{
+            alert(e.data.msg)
+          }
+        })
+      }else {
+        alert("未登录！")
+      }
     }
   },
   mounted() {
