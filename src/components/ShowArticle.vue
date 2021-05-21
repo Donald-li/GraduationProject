@@ -27,9 +27,18 @@
         @change="onratechange">
       </el-rate>
       <el-button
+        @click="thumbclick"
         class="el-icon-thumb"
-        style="margin-top: 5px">
-        点赞{{ articles.thumbs}}
+        style="margin-top: 5px"
+        v-html="isThumb === 2 ? '点赞'+articles.thumbs : '已点赞'+articles.thumbs">
+<!--        点赞{{ articles.thumbs}}-->
+      </el-button>
+      <el-button
+        @click="collectclick"
+        class="el-icon-star-off"
+        style="margin-top: 5px"
+        v-html="isCollected === 2? '收藏' : '已收藏'">
+        收藏
       </el-button>
     </div>
   </div>
@@ -44,6 +53,10 @@ export default {
       login_id:this.$session.get("user_id"),
       //判断是否已关注
       isFouces:2,
+      //判断是否点赞:1-已点赞，2-未点赞
+      isThumb:2,
+      //判断是否收藏:1-已收藏，2-未收藏
+      isCollected:2,
       colors: ['#99A9BF', '#F7BA2A', '#FF9900'],
       articles:[
         {
@@ -152,11 +165,41 @@ export default {
       }).then((e)=>{
         if(e.data.flag === 0){
           this.$message.warning(e.data.msg)
+          this.initArticle()
         }else if(e.data.flag === 1){
           this.$message.info(e.data.msg)
           this.initArticle()
         }else{
           this.$message.error(e.data.msg)
+          this.initArticle()
+        }
+      })
+    },
+    //点赞方法
+    thumbclick(){
+      this.axios({
+        method:'get',
+        url:'/api/users/user_thumb_article/'+this.login_id+'/'+this.aid
+      }).then((e)=>{
+        if(e.data.flag === 1){
+          this.$message.info(e.data.msg)
+          this.initArticle()
+        }else{
+          this.$message.warning(e.data.msg)
+        }
+      })
+    },
+    //收藏方法
+    collectclick(){
+      this.axios({
+        method:'get',
+        url:'/api/users/user_collect_article/'+this.login_id+'/'+this.aid
+      }).then((e)=>{
+        if(e.data.flag === 1){
+          this.$message.info(e.data.msg)
+          this.initArticle()
+        }else{
+          this.$message.warning(e.data.msg)
         }
       })
     }
