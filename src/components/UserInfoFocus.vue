@@ -27,7 +27,11 @@
       background
       layout="prev, pager, next"
       hide-on-single-page
-      :page-size="6"
+      @current-change="current_page_change"
+      @prev-click="pnclick"
+      @next-click="pnclick"
+      :current-page="currentPage+1"
+      :page-size="pagesize"
       :total="pageTotal">
     </el-pagination>
   </div>
@@ -40,31 +44,53 @@ export default {
   data(){
     return{
       pageTotal:1,
-      focus:''
+      focus:'',
+      currentPage:0,
+      pagesize:6
     }
   },
   methods:{
     getFollowers(){
       this.axios({
         method:"get",
-        url:"/api/users/get_follow_user/"+this.userid
+        url:"/api/users/get_follow_user/"+this.userid+'/'+this.currentPage*this.pagesize+'/'+this.pagesize
       }).then((e)=>{
         this.focus = e.data
       })
     },
     handleDelete(uid,fid){
-      this.axios({
-        method:'delete',
-        url:'/api/users/unfocues/'+uid+'/'+fid
-      }).then((e)=>{
-        if(e.data.msg == '删除成功！'){
-          this.$message.info(e.data.msg)
-        }else {
-          this.$message.warning(e.data.msg)
-        }
-        this.getFollowers()
-      })
-    }
+
+      this.$confirm('确定要取消关注吗?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.axios({
+          method:'delete',
+          url:'/api/users/unfocues/'+uid+'/'+fid
+        }).then((e)=>{
+          if(e.data.msg == '取关成功！'){
+            this.$message.info(e.data.msg)
+          }else {
+            this.$message.warning(e.data.msg)
+          }
+          this.getFollowers()
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消'
+        });
+      });
+    },
+    //点击页码跳转
+    current_page_change(page){
+      this.getFollowers(this.userid,page-1,this.pagesize)
+    },
+    //点击前后页跳转
+    pnclick(page){
+      this.getFollowers(this.userid,page-1,this.pagesize)
+    },
   },
   mounted() {
     this.getFollowers()

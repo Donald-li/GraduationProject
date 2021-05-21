@@ -3,7 +3,14 @@
     <h1>{{articles.title}}</h1>
     <div style="overflow: auto">
       <p style="text-align: right;width: 50%;float: left">作者：{{articles.user.name}} </p>
-      <el-button class="focues_btn" @click="focues(articles.user.id,login_id)" v-if="articles.user.id != login_id" style="float: left;margin-top: 15px;margin-left: 5px" size="mini" round>关注</el-button></div>
+      <el-button class="focues_btn"
+                 @click="focues(articles.user.id,login_id)"
+                 v-if="articles.user.id != login_id"
+                 style="float: left;margin-top: 15px;margin-left: 5px" size="mini"
+                 v-html="isFouces === 1? '已关注' : '关注'"
+                 round>
+
+      </el-button></div>
     <div v-html="articles.body">
 <!--      {{articles.body}}-->
     </div>
@@ -28,6 +35,8 @@ export default {
   data(){
     return{
       login_id:this.$session.get("user_id"),
+      //判断是否已关注
+      isFouces:2,
       articles:[
         {
           id:'',
@@ -81,20 +90,34 @@ export default {
     },
     //关注方法
     focues(uid,fid){
+      if(this.isFouces==2){
+        this.axios({
+          method:'get',
+          url:'/api/users/focues_user/'+uid+'/'+fid
+        }).then((e)=>{
+          if(e.data.msg == '关注成功！'){
+            this.$message.success(e.data.msg)
+          }else {
+            this.$message.warning(e.data.msg)
+          }
+        })
+      }else{
+        this.$message.warning('已关注，不能重复关注！')
+      }
+    },
+    //判断是否已关注用户
+    isFocues(){
       this.axios({
         method:'get',
-        url:'/api/users/focues_user/'+uid+'/'+fid
+        url:'/api/users/isFocues/'+this.aid+'/'+this.login_id
       }).then((e)=>{
-        if(e.data.msg == '关注成功！'){
-          this.$message.success(e.data.msg)
-        }else {
-          this.$message.warning(e.data.msg)
-        }
+        this.isFouces = e.data.msg
       })
     }
   },
   mounted() {
     this.initArticle()
+    this.isFocues()
   }
 }
 </script>
