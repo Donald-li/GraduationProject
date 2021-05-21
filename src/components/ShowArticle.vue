@@ -22,7 +22,9 @@
     <div>
       <el-rate
         v-model="articles.score"
-        :colors="colors">
+        :colors="colors"
+        show-score
+        @change="onratechange">
       </el-rate>
     </div>
   </div>
@@ -37,6 +39,7 @@ export default {
       login_id:this.$session.get("user_id"),
       //判断是否已关注
       isFouces:2,
+      colors: ['#99A9BF', '#F7BA2A', '#FF9900'],
       articles:[
         {
           id:'',
@@ -97,12 +100,34 @@ export default {
         }).then((e)=>{
           if(e.data.msg == '关注成功！'){
             this.$message.success(e.data.msg)
+            this.isFouces = 1
           }else {
             this.$message.warning(e.data.msg)
           }
         })
       }else{
-        this.$message.warning('已关注，不能重复关注！')
+        this.$confirm('已关注, 是否取消关注?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.axios({
+            method:'delete',
+            url:'/api/users/unfocues/'+this.articles.user.id+'/'+this.login_id
+          }).then((e)=>{
+            if(e.data.msg == '取关成功！'){
+              this.$message.success(e.data.msg)
+              this.isFouces = 2
+            }else {
+              this.$message.warning(e.data.msg)
+            }
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消'
+          });
+        });
       }
     },
     //判断是否已关注用户
@@ -113,6 +138,10 @@ export default {
       }).then((e)=>{
         this.isFouces = e.data.msg
       })
+    },
+    //评分方法
+    onratechange(rate){
+      this.$message.info(rate.toString())
     }
   },
   mounted() {
