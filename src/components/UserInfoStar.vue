@@ -6,25 +6,19 @@
                 <template slot-scope="scope">
 <!--                  <el-avatar :size="large" :src="scope.row.user.img"></el-avatar>-->
                   <i class="el-icon-edit"></i>
-                  <span>{{scope.row.user.name}}</span>
+                  <span>{{scope.row.article.user.name}}</span>
                 </template>
       </el-table-column>
       <el-table-column class="col" width="150" prop="title" label="标题">
-<!--                    <template slot-scope="scope">-->
-<!--                      &lt;!&ndash;              <span>{{scope.row.title}}</span>&ndash;&gt;-->
-<!--                      <el-rate-->
-<!--                        v-model="scope.row.score"-->
-<!--                        disabled-->
-<!--                        show-score-->
-<!--                        text-color="#ff9900">-->
-<!--                      </el-rate>-->
-<!--                    </template>-->
+                    <template slot-scope="scope">
+                                    <span>{{scope.row.article.title}}</span>
+                    </template>
       </el-table-column>
       <el-table-column class="col" width="150" prop="score" label="评分">
         <template slot-scope="scope">
           <!--              <span>{{scope.row.title}}</span>-->
           <el-rate
-            v-model="scope.row.score"
+            v-model="scope.row.article.score"
             disabled
             show-score
             text-color="#ff9900">
@@ -34,20 +28,21 @@
       <el-table-column class="col" prop="created_at" label="发布时间">
         <template slot-scope="scope">
           <i class="el-icon-time"></i>
-          <span>{{formatter(scope.row.created_at,'yyyy年MM月dd日 hh:mm:ss')}}</span>
+          <span>{{formatter(scope.row.article.created_at,'yyyy年MM月dd日 hh:mm:ss')}}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" prop="id">
+      <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button
             class="ac-btn"
             size="mini"
-            @click="handleEdit(scope.id, scope.row)">编辑</el-button>
+            type="danger"
+            @click="handleDelete(scope.row.article.id,userid)">移出</el-button>
           <el-button
             class="ac-btn"
             size="mini"
-            type="danger"
-            @click="handleDelete(scope.id, scope.row)">删除</el-button>
+            type="primary"
+            @click="handleInfo(scope.row.article.id)">详情</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -56,7 +51,11 @@
       background
       layout="prev, pager, next"
       hide-on-single-page
-      :page-size="6"
+      @current-change="current_page_change"
+      @prev-click="pnclick"
+      @next-click="pnclick"
+      :current-page="current_page+1"
+      :page-size="pagesize"
       :total="pageTotal">
     </el-pagination>
   </div>
@@ -69,16 +68,28 @@ export default {
   data(){
     return{
       pageTotal:1,
+      pagesize:6,
+      current_page:0,
       articles:''
     }
   },
   methods:{
-    getStar_articles(){
+    //初始化收藏列表
+    getStar_articles(uid,currentpage,pagesize){
       this.axios({
         method:"get",
-        url:"/api/users/get_star_articles/"+this.userid
+        url:"/api/users/get_collect_page/"+uid+'/'+currentpage*pagesize+'/'+pagesize
       }).then((e)=>{
         this.articles = e.data
+      })
+    },
+    //初始化收藏总数
+    total(){
+      this.axios({
+        method:'get',
+        url:'/api/users/get_collect_count/'+this.userid
+      }).then((e)=>{
+        this.pageTotal = e.data.total
       })
     },
     //时间格式化
@@ -102,10 +113,34 @@ export default {
         }
       }
       return fmt
+    },
+    //点击页码事件
+    current_page_change(page){
+      this.getStar_articles(this.userid,page-1,this.pagesize)
+    },
+    //分页前后按键事件
+    pnclick(page){
+      this.getStar_articles(this.userid,page-1,this.pagesize)
+    },
+    //跳转详情页
+    handleInfo(aid){
+      this.$router.push('/showartilce/'+aid)
+    },
+    //移出收藏夹方法
+    handleDelete(aid,uid){
+      this.axios({
+        method:'delete',
+        url:'/api/users/uncollect/'+uid+'/'+aid
+      }).then((e)=>{
+        this.$message.info(e.data.msg)
+        this.getStar_articles(this.userid,this.current_page,this.pagesize)
+        this.total()
+      })
     }
   },
   mounted() {
-    this.getStar_articles()
+    this.getStar_articles(this.userid,this.current_page,this.pagesize)
+    this.total()
   }
 }
 </script>
@@ -115,6 +150,6 @@ export default {
   margin-top: 7px;
 }
 .ac-btn{
-  float: right;
+  float: left;
 }
 </style>

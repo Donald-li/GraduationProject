@@ -91,9 +91,19 @@ export default {
     pnclick(page){
       this.getFollowers(this.userid,page-1,this.pagesize)
     },
+    //初始化关注总数
+    total(){
+      this.axios({
+        method:'get',
+        url:'/api/users/get_focues_count/'+this.userid
+      }).then((e)=>{
+        this.pageTotal = e.data.total
+      })
+    },
   },
   mounted() {
     this.getFollowers()
+    this.total()
   }
 }
 </script>
