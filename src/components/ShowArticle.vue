@@ -23,9 +23,14 @@
       <el-rate
         v-model="articles.score"
         :colors="colors"
-        show-score
+        show-text
         @change="onratechange">
       </el-rate>
+      <el-button
+        class="el-icon-thumb"
+        style="margin-top: 5px">
+        点赞{{ articles.thumbs}}
+      </el-button>
     </div>
   </div>
 </template>
@@ -141,7 +146,19 @@ export default {
     },
     //评分方法
     onratechange(rate){
-      this.$message.info(rate.toString())
+      this.axios({
+        method:'get',
+        url:'/api/users/user_score_article/'+this.login_id+'/'+this.aid+'/'+rate
+      }).then((e)=>{
+        if(e.data.flag === 0){
+          this.$message.warning(e.data.msg)
+        }else if(e.data.flag === 1){
+          this.$message.info(e.data.msg)
+          this.initArticle()
+        }else{
+          this.$message.error(e.data.msg)
+        }
+      })
     }
   },
   mounted() {
