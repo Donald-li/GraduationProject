@@ -177,36 +177,112 @@ export default {
     },
     //点赞方法
     thumbclick(){
-      this.axios({
-        method:'get',
-        url:'/api/users/user_thumb_article/'+this.login_id+'/'+this.aid
-      }).then((e)=>{
-        if(e.data.flag === 1){
-          this.$message.info(e.data.msg)
-          this.initArticle()
-        }else{
-          this.$message.warning(e.data.msg)
-        }
-      })
+
+      if(this.isThumb == 2){
+        this.axios({
+          method:'get',
+          url:'/api/users/user_thumb_article/'+this.login_id+'/'+this.aid
+        }).then((e)=>{
+          if(e.data.flag === 1){
+            this.$message.info(e.data.msg)
+            this.isThumb = 1
+            this.initArticle()
+          }else{
+            this.$message.warning(e.data.msg)
+          }
+        })
+      }else{
+        this.$confirm('您已点赞，是否取消点赞？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.axios({
+            method:'delete',
+            url:'/api/users/unthumb/'+this.login_id+'/'+this.aid
+          }).then((e)=>{
+            if(e.data.msg === '取消点赞成功！'){
+              this.$message.info(e.data.msg)
+              this.isThumb = 2
+              this.initArticle()
+            }else{
+              this.$message.warning(e.data.msg)
+            }
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消'
+          });
+        });
+      }
     },
     //收藏方法
     collectclick(){
+
+      if(this.isCollected == 2){
+        this.axios({
+          method:'get',
+          url:'/api/users/user_collect_article/'+this.login_id+'/'+this.aid
+        }).then((e)=>{
+          if(e.data.flag === 1){
+            this.$message.info(e.data.msg)
+            this.initArticle()
+            this.isCollected = 1
+          }else{
+            this.$message.warning(e.data.msg)
+          }
+        })
+      }else{
+        this.$confirm('您已收藏，是否取消收藏？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.axios({
+            method:'delete',
+            url:'/api/users/uncollect/'+this.login_id+'/'+this.aid
+          }).then((e)=>{
+            if(e.data.msg === '取消收藏成功！'){
+              this.$message.info(e.data.msg)
+              this.isCollected = 2
+              this.initArticle()
+            }else{
+              this.$message.warning(e.data.msg)
+            }
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消'
+          });
+        });
+      }
+    },
+    //判断是否收藏
+    isCollect(){
       this.axios({
         method:'get',
-        url:'/api/users/user_collect_article/'+this.login_id+'/'+this.aid
+        url:'/api/users/isCollect/'+this.login_id+'/'+this.aid
       }).then((e)=>{
-        if(e.data.flag === 1){
-          this.$message.info(e.data.msg)
-          this.initArticle()
-        }else{
-          this.$message.warning(e.data.msg)
-        }
+        this.isCollected = e.data.flag
+      })
+    },
+    //判断是否点赞
+    isThumbed(){
+      this.axios({
+        method:'get',
+        url:'/api/users/isThumb/'+this.login_id+'/'+this.aid
+      }).then((e)=>{
+        this.isThumb = e.data.flag
       })
     }
   },
   mounted() {
     this.initArticle()
     this.isFocues()
+    this.isCollect()
+    this.isThumbed()
   }
 }
 </script>
