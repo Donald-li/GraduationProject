@@ -41,6 +41,24 @@
         收藏
       </el-button>
     </div>
+    <div class="comment" style="margin-top: 20px">
+      <el-input id="new_input" v-model="commenttext" >
+        <el-button slot="append" @click="createComment">评论</el-button>
+      </el-input>
+
+      <el-card v-for="(c,index) in comments" :key="index" class="ac_card" shadow="hover">
+        <div style="overflow: auto">
+          <el-avatar class="ac_title" :size="small" :src="c.user.img"></el-avatar>
+          <p class="ac_title">{{ c.user.name }}</p>
+        </div>
+        <div @click="clickroute()" style="overflow: auto">
+          <p style="float: left;margin-left: 50px">{{ c.body }}</p>
+        </div>
+        <div>
+          <p style="float: right;margin-right: 50px;margin-bottom: 20px">{{formatter(c.created_at, 'yyyy年MM月dd日 hh:mm:ss')}}</p>
+        </div>
+      </el-card>
+    </div>
   </div>
 </template>
 
@@ -57,6 +75,10 @@ export default {
       isThumb:2,
       //判断是否收藏:1-已收藏，2-未收藏
       isCollected:2,
+      //创建的评论内容
+      commenttext:'',
+      //评论对象
+      comments:'',
       colors: ['#99A9BF', '#F7BA2A', '#FF9900'],
       articles:[
         {
@@ -276,6 +298,34 @@ export default {
       }).then((e)=>{
         this.isThumb = e.data.flag
       })
+    },
+    //初始化评论
+    initComments(){
+      this.axios({
+        method:'get',
+        url:'/api/articles/get_comment/'+this.login_id+'/'+this.aid
+      }).then((e)=>{
+        this.comments = e.data
+      })
+    },
+    //提交评论方法
+    createComment(){
+      this.axios({
+        method:'post',
+        url:'/api/comments',
+        data:{
+          uid:this.login_id,
+          aid:this.aid,
+          text:this.commenttext
+        }
+      }).then((e)=>{
+        if(e.data.flag === 1){
+          this.$message.info(e.data.msg)
+          this.initComments()
+        }else{
+          this.$message.error(e.data.msg)
+        }
+      })
     }
   },
   mounted() {
@@ -283,10 +333,22 @@ export default {
     this.isFocues()
     this.isCollect()
     this.isThumbed()
+    this.initComments()
   }
 }
 </script>
 
 <style scoped>
+.comment{
 
+}
+.ac_card{
+  height: auto;
+  margin-top: 10px;
+  overflow: auto;
+}
+.ac_title{
+  float: left;
+  margin-left: 10px;
+}
 </style>

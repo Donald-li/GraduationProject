@@ -1,26 +1,34 @@
 <template>
   <div>
-    <el-card class="ac_card" v-for="(a,index) in articles" :key="index" shadow="hover">
-      <div style="overflow: auto">
-        <el-avatar class="ac_title" :size="small" :src="a.user.img"></el-avatar>
-        <p class="ac_title">{{a.user.name}}</p>
-      </div>
-      <div @click="clickroute(a.id)" style="overflow: auto">
-        <h4>{{a.title}}</h4>
-        <p style="float: left;margin-left: 80px">{{a.body.substring(0,200)}}...</p>
-      </div>
-      <div style="float: right">
-        <el-rate
-          v-model="a.score"
-          disabled
-          show-score
-          text-color="#ff9900"
-          score-template="{value}">
-        </el-rate>
-        <p>{{formatter(a.created_at,"yyyy年MM月dd日 hh:mm:ss")}}</p>
-      </div>
-    </el-card>
-    <p style="margin-top: 90px;color: #a0cfff">总得有个底吧。。。</p>
+
+    <el-timeline>
+      <el-timeline-item v-for="(a,index) in articles" :key="index"  :timestamp="formatter(a.created_at,'yyyy年MM月dd日 hh:mm:ss')" placement="top">
+        <el-card class="ac_card" shadow="hover">
+                <div style="overflow: auto">
+                  <el-avatar class="ac_title" :size="small" :src="a.user.img"></el-avatar>
+                  <p class="ac_title">{{a.user.name}}</p>
+                </div>
+                <div @click="clickroute(a.id)" style="overflow: auto">
+                  <h4>{{a.title}}</h4>
+                  <p style="float: left;margin-left: 80px">{{a.body.substring(0,200)}}...</p>
+                </div>
+                <div style="float: right">
+                  <el-rate
+                    v-model="a.score"
+                    disabled
+                    show-score
+                    text-color="#ff9900"
+                    score-template="{value}"
+                    style="margin-bottom: 20px">
+                  </el-rate>
+<!--                  <p>{{formatter(a.created_at,"yyyy年MM月dd日 hh:mm:ss")}}</p>-->
+                </div>
+              </el-card>
+      </el-timeline-item>
+      <el-timeline-item>
+        <p style="margin-top: 10px">总得有个底吧。。。</p>
+      </el-timeline-item>
+    </el-timeline>
   </div>
 </template>
 

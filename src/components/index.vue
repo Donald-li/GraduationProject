@@ -4,32 +4,7 @@
     <Head/>
     <el-divider></el-divider>
 
-<!--    主体部分-->
-<!--    走马灯-->
-<!--    <div class="carouselbox">-->
-<!--      <el-carousel height="300px">-->
-<!--        <el-carousel-item v-for="(item,index) in carousel_images" :key="index" :label="index+1">-->
-<!--          <img :src="item" class="image">-->
-<!--        </el-carousel-item>-->
-<!--      </el-carousel>-->
-<!--    </div>-->
-<!--&lt;!&ndash;首页热点&ndash;&gt;-->
-<!--    <div class="headcard">-->
-<!--      <div class="innercard"  v-for="index in 4">-->
-<!--        <img class="innercard-img" src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png">-->
-<!--        <div style="padding: 4px;">-->
-<!--          <span>好吃的汉堡</span>-->
-<!--          <div>-->
-<!--            <time class="time">{{ currentDate }}</time>-->
-<!--            <el-button type="text" class="button">操作按钮</el-button>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-
-<!--    <el-divider class="dividers"></el-divider>-->
-
-    <div style="overflow: auto">
+    <div style="overflow: auto;width: 100%">
       <Index_block v-for=" (title,index) in titles " :key="index" :title="title" :titleindex="index+1"></Index_block>
     </div>
     <el-divider />
