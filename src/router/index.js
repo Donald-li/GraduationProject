@@ -18,6 +18,7 @@ import CreateArticle from "../components/CreateArticle";
 import EditArticle from "../components/EditArticle";
 import SearchList from "../components/SearchList";
 import Active from "../components/Active";
+import SectionPage from "../components/SectionPage";
 
 //安装路由
 Vue.use(VueRouter);
@@ -141,6 +142,12 @@ export default new VueRouter({
       props:true,
       name:'active',
       component:Active
+    },
+    {
+      path:'/SectionPage/:sid/:sname',
+      props:true,
+      name:'sectionpage',
+      component:SectionPage
     }
   ]
 })

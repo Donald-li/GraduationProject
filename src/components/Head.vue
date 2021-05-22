@@ -2,21 +2,18 @@
   <!--  页头-->
   <div id="head">
     <ul>
-      <li class="title_li">
-        <a href="/hot">
-          <!--          <i class="title_icon el-icon-message"></i>-->
-          <el-avatar class="title_icon" icon="el-icon-chat-dot-round"></el-avatar>
-          <span class="title_span">动态</span>
-        </a>
+      <li class="title_li" @click="gotoActice">
+        <el-avatar class="title_icon" icon="el-icon-chat-dot-round"></el-avatar>
+        <span class="title_span">动态</span>
       </li>
-      <li class="title_li">
+      <li class="title_li" @click="gotoFocus">
         <a href="#">
           <!--          <i class="el-icon-chat-dot-round title_icon"></i>-->
           <el-avatar class=" title_icon" icon="el-icon-star-off"></el-avatar>
           <span class="title_span">收藏</span>
         </a>
       </li>
-      <li class="title_li">
+      <li class="title_li" @click="gotoStar">
         <a href="#">
           <!--          <i class="el-icon-chat-dot-round title_icon"></i>-->
           <el-avatar class=" title_icon" icon="el-icon-thumb"></el-avatar>
@@ -26,8 +23,8 @@
     </ul>
 
     <ul>
-      <li class="title_li" v-for="t in blocks">
-        <a :href="'#'"><span class="title_span_2">{{ t }}</span></a>
+      <li class="title_li" v-for="t in blocks" @click="gotoSection(t.title,t.text)">
+        <a :href="'#'"><span class="title_span_2">{{ t.text }}</span></a>
       </li>
     </ul>
 
@@ -44,7 +41,32 @@ export default {
   name: "index",
   data(){
     return{
-      blocks:['电影','游戏','音乐','舞蹈','美食','动漫'],
+      blocks:[
+        {
+          title:1,
+          text:'电影'
+        },
+        {
+          title:2,
+          text:'游戏'
+        },
+        {
+          title:3,
+          text:'音乐'
+        },
+        {
+          title:4,
+          text:'舞蹈'
+        },
+        {
+          title:5,
+          text:'美食'
+        },
+        {
+          title:6,
+          text:'动漫'
+        },
+      ],
       //搜索条件
       searcharray:''
     }
@@ -52,6 +74,18 @@ export default {
   methods:{
     search(array){
       this.$router.push('/search/'+array)
+    },
+    gotoActice(){
+      this.$router.push("/active/"+this.$session.get("user_id"))
+    },
+    gotoFocus(){
+      this.$router.push("/userInfo/"+this.$session.get("user_id")+'/focus/'+this.$session.get("user_id"))
+    },
+    gotoStar(){
+      this.$router.push("/userInfo/"+this.$session.get("user_id")+'/stars/'+this.$session.get("user_id"))
+    },
+    gotoSection(section,sname){
+      this.$router.push("/SectionPage/"+section+'/'+sname)
     }
   }
 }
