@@ -29,10 +29,12 @@
 
 <!--    <el-divider class="dividers"></el-divider>-->
 
-    <Index_block v-for=" (title,index) in titles " :key="index" :title="title" :titleindex="index+1"></Index_block>
-
-    <div style="margin-top: 250px">
-      <CreateArticle :id="this.$session.get('user_id')"/>
+    <div style="overflow: auto">
+      <Index_block v-for=" (title,index) in titles " :key="index" :title="title" :titleindex="index+1"></Index_block>
+    </div>
+    <el-divider />
+    <div style="overflow: auto">
+      <CreateArticle style="margin-top: 30px" :id="this.$session.get('user_id')"></CreateArticle>
     </div>
   </div>
 </template>
@@ -133,6 +135,6 @@ export default {
   clear: both
 }
 #outter_box{
-  height: 1000px;
+  height: auto;
 }
 </style>

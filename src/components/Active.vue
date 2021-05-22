@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-card class="ac_card" v-for="(a,index) in articles" :ke="index" shadow="hover">
+    <el-card class="ac_card" v-for="(a,index) in articles" :key="index" shadow="hover">
       <div style="overflow: auto">
         <el-avatar class="ac_title" :size="small" :src="a.user.img"></el-avatar>
         <p class="ac_title">{{a.user.name}}</p>

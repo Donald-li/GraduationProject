@@ -4,7 +4,7 @@
       <i class="el-icon-guide"></i>
       {{ title }}
     </h3>
-    <el-divider class="dividers"></el-divider>
+<!--    <el-divider class="dividers"></el-divider>-->
 
     <el-table :data="index_articles" class="blocks_table" @row-click="overclick">
       <el-table-column class="col" width="300" prop="user" label="作者">
