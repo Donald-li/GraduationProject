@@ -31,7 +31,7 @@
         <el-tooltip class="item" effect="dark" :content="userinfo" placement="bottom">
           <div class="demo-basic--circle">
             <div class="block">
-              <el-avatar :size="large" :src="loginuser.img">登录</el-avatar>
+              <el-avatar :src="loginuser.img">登录</el-avatar>
             </div>
           </div>
         </el-tooltip>
@@ -50,7 +50,7 @@
 <!--        </el-badge>-->
 <!--      </el-menu-item>-->
 <!--      收藏-->
-      <el-menu-item v-if="currect_user!==0" index="/collect">
+      <el-menu-item v-if="currect_user!==0" :index="'/message/'+this.$session.get('user_id')">
         私信
       </el-menu-item>
 <!--      关注-->

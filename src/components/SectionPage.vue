@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Head/>
+    <Head />
     <el-divider></el-divider>
 
     <h3 class="blocks_title">
@@ -38,9 +38,14 @@
 </template>
 
 <script>
+import Head from "./Head";
+
 export default {
   name: "SectionPage",
   props:["sid","sname"],
+  // components:{
+  //   Head,
+  // },
   data(){
     return {
       index_articles:''

@@ -5,7 +5,7 @@ import indexPage from "../components/index"
 import UserInfo from "../components/UserInfo";
 import Hot from "../components/Hot";
 import Reply from "../components/Reply";
-import Collect from "../components/Message";
+import Message from "../components/Message";
 import Focus from "../components/UserInfoFocus";
 import UserInfoDetail from "../components/UserInfoDetail";
 import UserInfoArtciles from "../components/UserInfoArtciles";
@@ -93,9 +93,10 @@ export default new VueRouter({
       component:Reply
     },
     {
-      path:'/collect',
-      name:'collect',
-      component:Collect
+      path:'/message/:uid',
+      props:true,
+      name:'message',
+      component:Message
     },
     {
       path:'/focus',

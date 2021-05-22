@@ -10,7 +10,7 @@
                 </div>
                 <div @click="clickroute(a.id)" style="overflow: auto">
                   <h4>{{a.title}}</h4>
-                  <p style="float: left;margin-left: 80px">{{a.body.substring(0,200)}}...</p>
+                  <p style="float: left;margin-left: 80px" v-html="a.body.substring(0,200)+'...'"></p>
                 </div>
                 <div style="float: right">
                   <el-rate
