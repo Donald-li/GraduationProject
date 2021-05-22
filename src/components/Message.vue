@@ -1,5 +1,5 @@
 <template>
-  <h1>这里是收藏页面</h1>
+  <h1>这里是私信页面</h1>
 </template>
 
 <script>

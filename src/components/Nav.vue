@@ -51,7 +51,7 @@
 <!--      </el-menu-item>-->
 <!--      收藏-->
       <el-menu-item v-if="currect_user!==0" index="/collect">
-        收藏
+        私信
       </el-menu-item>
 <!--      关注-->
 <!--      <el-menu-item v-if="currect_user!==0" :index="'/focus/'+loginuser.id">-->

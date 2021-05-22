@@ -3,10 +3,9 @@ import VueRouter from "vue-router";
 import Nav from "../components/Nav";
 import indexPage from "../components/index"
 import UserInfo from "../components/UserInfo";
-import MessagePage from "../components/MessagePage";
 import Hot from "../components/Hot";
 import Reply from "../components/Reply";
-import Collect from "../components/Collect";
+import Collect from "../components/Message";
 import Focus from "../components/UserInfoFocus";
 import UserInfoDetail from "../components/UserInfoDetail";
 import UserInfoArtciles from "../components/UserInfoArtciles";
@@ -81,11 +80,6 @@ export default new VueRouter({
           }
         }
       ]
-    },
-    {
-      path:'/messagePage',
-      name:'messagepage',
-      component:MessagePage
     },
     {
       path:'/hot',

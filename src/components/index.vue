@@ -31,16 +31,21 @@
 
     <Index_block v-for=" (title,index) in titles " :key="index" :title="title" :titleindex="index+1"></Index_block>
 
+    <div style="margin-top: 250px">
+      <CreateArticle :id="this.$session.get('user_id')"/>
+    </div>
   </div>
 </template>
 
 <script>
 import Head from "./Head";
 import Index_block from "./Index_block";
+import CreateArticle from "./CreateArticle";
 
 export default {
   name: "index",
   components:{
+    CreateArticle,
     Head,
     Index_block
   },

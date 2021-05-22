@@ -2,7 +2,7 @@
   <div class="ArticleDetail">
     <div>
       <label for="title">文章标题:</label>
-      <el-input id="title" name="title" v-model="article.title" style="width: 90%;height: 40px;margin: 10px" maxlength="10"
+      <el-input id="title" name="title" v-model="article.title" style="width: 90%;height: 40px;margin: 10px" maxlength="100"
                 show-word-limit />
     </div>
     <label for="section">文章版块:</label>
@@ -61,7 +61,7 @@ export default {
         method:'post',
         data:{'article':this.article}
       }).then((e)=>{
-        alert(e.data.msg)
+        this.$message.info(e.data.msg)
       })
     }
   }
