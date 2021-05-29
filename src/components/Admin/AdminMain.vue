@@ -13,11 +13,11 @@
 
             <i class="el-icon-setting"></i>
 
-            <span slot="title">用户管理</span>
+            <span slot="title">用户概览</span>
 
           </el-menu-item>
 
-          <el-menu-item index="/user/role">
+          <el-menu-item :index="'/admin/roles'">
 
             <i class="el-icon-setting"></i>
 
@@ -25,27 +25,27 @@
 
           </el-menu-item>
 
-          <el-menu-item index="/user/permission">
+          <el-menu-item :index="'/admin/articles'">
 
             <i class="el-icon-setting"></i>
 
             <span slot="title">文章管理</span>
 
           </el-menu-item>
-          <el-menu-item index="/user/permission">
+          <el-menu-item :index="'/admin/comments'">
 
             <i class="el-icon-setting"></i>
 
             <span slot="title">评论管理</span>
 
           </el-menu-item>
-          <el-menu-item index="/user/permission">
+<!--          <el-menu-item index="/user/permission">-->
 
-            <i class="el-icon-setting"></i>
+<!--            <i class="el-icon-setting"></i>-->
 
-            <span slot="title">消息管理</span>
+<!--            <span slot="title">消息管理</span>-->
 
-          </el-menu-item>
+<!--          </el-menu-item>-->
 
         </el-menu>
 

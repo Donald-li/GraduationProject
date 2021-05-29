@@ -21,6 +21,9 @@ import Active from "../components/Active";
 import SectionPage from "../components/SectionPage";
 import AdminMain from "../components/Admin/AdminMain";
 import AdminUser from "../components/Admin/AdminUser";
+import AdminRole from "../components/Admin/AdminRole";
+import AdminArticle from "../components/Admin/AdminArticle";
+import AdminComment from "../components/Admin/AdminComment";
 
 //安装路由
 Vue.use(VueRouter);
@@ -164,6 +167,27 @@ export default new VueRouter({
           name:'users',
           components:{
             admin_detail:AdminUser
+          }
+        },
+        {
+          path:'roles',
+          name:'roles',
+          components: {
+            admin_detail:AdminRole
+          }
+        },
+        {
+          path:'articles',
+          name:'articles',
+          components: {
+            admin_detail:AdminArticle
+          }
+        },
+        {
+          path:'comments',
+          name:'comments',
+          components: {
+            admin_detail:AdminComment
           }
         }
       ]

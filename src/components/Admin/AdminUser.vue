@@ -1,37 +1,37 @@
 <template>
   <div>
 
-    <el-header>
-      <div class="demo-input-size">
-        <label for="title">用户名</label>
-        <el-input
-          id="title"
-          size="medium"
-          class="admin_search_input"
-          placeholder="请输入内容"
-          suffix-icon="el-icon-date"
-          v-model="username">
-        </el-input>
-        <label for="body">用户状态</label>
-        <el-select id="body" class="admin_search_input" v-model="state" slot="prepend" placeholder="请选择">
-          <el-option label="使用中" value="1"></el-option>
-          <el-option label="封禁" value="2"></el-option>
-        </el-select>
-        <label for="created">创建时间</label>
-        <el-date-picker
-          id="created"
-          v-model="date_search"
-          value-format="yyyy-MM-dd HH:mm:ss"
-          type="datetimerange"
-          :picker-options="pickerOptions"
-          range-separator="至"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
-          align="right">
-        </el-date-picker>
-        <el-button slot="append" icon="el-icon-search" @click="search_user"></el-button>
-      </div>
-    </el-header>
+<!--    <el-header>-->
+<!--      <div class="demo-input-size">-->
+<!--        <label for="title">用户名</label>-->
+<!--        <el-input-->
+<!--          id="title"-->
+<!--          size="medium"-->
+<!--          class="admin_search_input"-->
+<!--          placeholder="请输入内容"-->
+<!--          suffix-icon="el-icon-date"-->
+<!--          v-model="username">-->
+<!--        </el-input>-->
+<!--        <label for="body">用户状态</label>-->
+<!--        <el-select id="body" class="admin_search_input" v-model="state" slot="prepend" placeholder="请选择">-->
+<!--          <el-option label="使用中" value="1"></el-option>-->
+<!--          <el-option label="封禁" value="2"></el-option>-->
+<!--        </el-select>-->
+<!--        <label for="created">创建时间</label>-->
+<!--        <el-date-picker-->
+<!--          id="created"-->
+<!--          v-model="date_search"-->
+<!--          value-format="yyyy-MM-dd HH:mm:ss"-->
+<!--          type="datetimerange"-->
+<!--          :picker-options="pickerOptions"-->
+<!--          range-separator="至"-->
+<!--          start-placeholder="开始日期"-->
+<!--          end-placeholder="结束日期"-->
+<!--          align="right">-->
+<!--        </el-date-picker>-->
+<!--        <el-button slot="append" icon="el-icon-search" @click="search_user"></el-button>-->
+<!--      </div>-->
+<!--    </el-header>-->
 
     <el-table :data="users" class="blocks_table" @row-click="overclick">
       <el-table-column class="col" width="200" label="用户名">
@@ -100,43 +100,43 @@ export default {
   data(){
     return{
       users:'',
-      //搜索用用户名
-      username:'',
-      //搜索状态
-      state:'',
-      //搜索用时间
-      date_search:[new Date(),new Date()],
       pagesize:6,
       pageTotal:100,
       offset:0,
       select:'',
-      pickerOptions: {
-        shortcuts: [{
-          text: '最近一周',
-          onClick(picker) {
-            const end = new Date();
-            const start = new Date();
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
-            picker.$emit('pick', [start, end]);
-          }
-        }, {
-          text: '最近一个月',
-          onClick(picker) {
-            const end = new Date();
-            const start = new Date();
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
-            picker.$emit('pick', [start, end]);
-          }
-        }, {
-          text: '最近三个月',
-          onClick(picker) {
-            const end = new Date();
-            const start = new Date();
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
-            picker.$emit('pick', [start, end]);
-          }
-        }]
-      },
+      // //搜索用用户名
+      // username:'',
+      // //搜索状态
+      // state:'',
+      // //搜索用时间
+      // date_search:[],
+      // pickerOptions: {
+      //   shortcuts: [{
+      //     text: '最近一周',
+      //     onClick(picker) {
+      //       const end = new Date();
+      //       const start = new Date();
+      //       start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+      //       picker.$emit('pick', [start, end]);
+      //     }
+      //   }, {
+      //     text: '最近一个月',
+      //     onClick(picker) {
+      //       const end = new Date();
+      //       const start = new Date();
+      //       start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+      //       picker.$emit('pick', [start, end]);
+      //     }
+      //   }, {
+      //     text: '最近三个月',
+      //     onClick(picker) {
+      //       const end = new Date();
+      //       const start = new Date();
+      //       start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+      //       picker.$emit('pick', [start, end]);
+      //     }
+      //   }]
+      // },
       created_at:''
     }
   },
@@ -208,7 +208,13 @@ export default {
     },
     //模糊搜索
     search_user(){
-      this.$message.info(this.date_search[0].toString()+'--'+this.date_search[1].toString())
+      this.axios({
+        method:'get',
+        url:'/api/users/search_user_group/'+this.username+'/'+this.state+'/'+this.date_search[0]+'/'+this.date_search[1]
+      }).then((e)=>{
+        this.users = e.data.users
+      })
+
     }
   },
     mounted(){
