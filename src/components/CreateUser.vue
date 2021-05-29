@@ -116,6 +116,8 @@ export default {
         data:{'ruleForm':this.ruleForm}
       }).then((e)=>{
         alert(e.data.msg)
+        this.$session.set('user_id',e.data.id)
+        this.$router.push('/')
       })
     },
     //重置表单方法

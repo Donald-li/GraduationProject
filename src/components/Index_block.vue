@@ -7,14 +7,14 @@
 <!--    <el-divider class="dividers"></el-divider>-->
 
     <el-table :data="index_articles" class="blocks_table" @row-click="overclick">
-      <el-table-column class="col" width="300" prop="user" label="作者">
+      <el-table-column class="col" width="280" prop="user" label="作者">
         <template slot-scope="scope">
           <el-avatar :size="large" :src="scope.row.user.img"></el-avatar>
           <i class="el-icon-edit"></i>
           <span>{{ scope.row.user.name}}</span>
         </template>
       </el-table-column>
-      <el-table-column class="col" width="500" prop="title" label="标题">
+      <el-table-column class="col" width="400" prop="title" label="标题">
         <template slot-scope="scope">
           <span>{{ scope.row.title }}</span>
           <el-rate
@@ -169,7 +169,7 @@ export default {
 .blocks_title {
   background-color: #ECF5FF;
   height: 40px;
-  width: 100%;
+  width: 99%;
   text-align: left;
   padding-top: 15px;
   padding-left: 10px;

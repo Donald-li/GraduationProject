@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="width: 100%">
 
     <el-menu
       :default-active="'/index'"
@@ -59,6 +59,10 @@
 <!--      </el-menu-item>-->
       <el-menu-item v-if="currect_user!==0" :index="'/createarticle/'+loginuser.id">
         <i class="el-icon-edit-outline"/>发表新文章
+      </el-menu-item>
+<!--  管理员页面链接-->
+      <el-menu-item style="float: right" v-if="currect_user!==0&&(loginuser.rule=='admin'||loginuser.rule == 'super_admin')" index="/admin">
+        管理员页面
       </el-menu-item>
     </el-menu>
 <!--    <router-view/>-->
@@ -197,5 +201,8 @@ export default {
   }
   .item{
     z-index: 1;
+  }
+  .el-menu-demo{
+    width: 100%;
   }
 </style>

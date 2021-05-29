@@ -1,16 +1,15 @@
 <template>
-  <div id="app">
+  <div id="app" :style="appstyle">
     <el-container>
       <el-header>
         <Nav/>
       </el-header>
       <el-main class="el-main">
         <router-view class="main_view"/>
+        <router-view name="admin_view" class="admin_view"/>
       </el-main>
-      <el-footer style="text-align: center;color: #ffffff"><h2 style="background-color: #D9ECFF;">Footer</h2></el-footer>
+      <el-footer style="text-align: center;color: #ffffff"><h5 style="background-color: #D9ECFF;">©2021 HurgHart Corporation. All rights reserved.</h5></el-footer>
     </el-container>
-
-    <el-backtop target=".page-component__scroll .el-scrollbar__wrap"></el-backtop>
   </div>
 </template>
 
@@ -21,6 +20,16 @@ export default {
   name: 'App',
   components: {
     Nav
+  },
+  date(){
+    return{
+      appstyle:{
+        backgroundImage: "url(" + require("../static/images/beijing.jpg") + ")",
+        backgroundPosition: "center center",
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+      }
+    }
   }
 }
 </script>

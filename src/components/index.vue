@@ -4,7 +4,7 @@
     <Head/>
     <el-divider></el-divider>
 
-    <div style="overflow: auto;width: 100%">
+    <div style="overflow: auto">
       <Index_block v-for=" (title,index) in titles " :key="index" :title="title" :titleindex="index+1"></Index_block>
     </div>
     <el-divider />
