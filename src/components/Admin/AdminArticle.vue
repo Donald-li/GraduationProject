@@ -35,7 +35,7 @@
           <el-button
             class="ac-btn"
             size="mini"
-            @click="handleEdit(scope.row.id)">查看</el-button>
+            @click="handleMore(scope.row.id)">查看</el-button>
           <el-button
             class="ac-btn"
             size="mini"
@@ -126,17 +126,17 @@ export default {
     },
     //删除用户
     handleDelete(id){
-      this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
+      this.$confirm('此操作将永久删除该文章, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
         this.axios({
           method:'delete',
-          url:'/api/users/'+id
+          url:'/api/articles/'+id
         }).then((e)=>{
           this.$message.info(e.data.msg)
-          this.initUser(this.pagesize,this.pagesize * this.offset)
+          this.initArticle(this.pagesize,this.pagesize * this.offset)
         })
       }).catch(() => {
         this.$message({
@@ -145,6 +145,10 @@ export default {
         });
       });
     },
+    //查看详情
+    handleMore(aid){
+      this.$router.push('/showartilce/'+aid)
+    }
 
   },
   mounted(){
