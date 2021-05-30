@@ -1,7 +1,7 @@
 <template>
   <div style="height: 450px">
     <h3>已发表文章</h3>
-    <el-table :data="articles" class="blocks_table">
+    <el-table :data="articles" class="blocks_table" :row-class-name="tableRowClassName">
       <el-table-column class="col" width="150" label="作者">
         <template slot-scope="scope">
 <!--          <el-avatar :size="large" :src="user.img"></el-avatar>-->
@@ -10,15 +10,6 @@
         </template>
       </el-table-column>
       <el-table-column class="col" width="150" prop="title" label="标题">
-        <!--            <template slot-scope="scope">-->
-        <!--              &lt;!&ndash;              <span>{{scope.row.title}}</span>&ndash;&gt;-->
-        <!--              <el-rate-->
-        <!--                v-model="scope.row.score"-->
-        <!--                disabled-->
-        <!--                show-score-->
-        <!--                text-color="#ff9900">-->
-        <!--              </el-rate>-->
-        <!--            </template>-->
       </el-table-column>
       <el-table-column class="col" width="150" prop="score" label="评分">
         <template slot-scope="scope">
@@ -220,6 +211,16 @@ export default {
     //编辑方法
     handleEdit(aid){
       this.$router.push('/editarticle/'+this.userid+"/"+aid)
+    },
+
+    tableRowClassName({row, rowIndex}) {
+      if (row.state !== 'show') {
+        return 'warning-row';
+      } else if (row.state === 'show') {
+        return 'success-row';
+      }
+      console.log(row)
+      return '';
     }
   },
   mounted() {
@@ -235,5 +236,12 @@ export default {
 }
 .ac-btn{
   float: right;
+}
+/deep/ .el-table .warning-row {
+  background: #F56C6C;
+}
+
+/deep/ .el-table .success-row {
+  background: #f0f9eb;
 }
 </style>

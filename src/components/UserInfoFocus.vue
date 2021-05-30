@@ -1,7 +1,7 @@
 <template>
   <div>
     <h3>已关注用户</h3>
-    <el-table :data="focus" class="blocks_table">
+    <el-table :data="focus" class="blocks_table" :row-class-name="tableRowClassName">
       <el-table-column class="col" width="250"  prop="img" label="用户头像">
                 <template slot-scope="scope">
                   <el-avatar :size="large" :src="scope.row.user.img"></el-avatar>
@@ -100,6 +100,15 @@ export default {
         this.pageTotal = e.data.total
       })
     },
+    tableRowClassName({row, rowIndex}) {
+      if (row.user.state !== 'using') {
+        return 'warning-row';
+      } else if (row.user.state === 'using') {
+        return 'success-row';
+      }
+      console.log(row)
+      return '';
+    }
   },
   mounted() {
     this.getFollowers()
@@ -114,5 +123,12 @@ export default {
 }
 .ac-btn{
   float: left;
+}
+/deep/ .el-table .warning-row {
+  background: #F56C6C;
+}
+
+/deep/ .el-table .success-row {
+  background: #f0f9eb;
 }
 </style>

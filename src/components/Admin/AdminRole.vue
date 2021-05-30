@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-table :data="users" class="blocks_table" @row-click="overclick">
+    <el-table :data="users" class="blocks_table">
       <el-table-column class="col" width="200" label="用户名">
         <template slot-scope="scope">
           <el-avatar :size="large" :src="scope.row.img"></el-avatar>

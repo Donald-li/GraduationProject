@@ -1,7 +1,7 @@
 <template>
   <div>
     <h3>已收藏文章</h3>
-    <el-table :data="articles" class="blocks_table">
+    <el-table :data="articles" class="blocks_table" :row-class-name="tableRowClassName">
       <el-table-column class="col" width="150" label="作者">
                 <template slot-scope="scope">
 <!--                  <el-avatar :size="large" :src="scope.row.user.img"></el-avatar>-->
@@ -42,6 +42,7 @@
             class="ac-btn"
             size="mini"
             type="primary"
+            v-if="scope.row.article.state == 'show'"
             @click="handleInfo(scope.row.article.id)">详情</el-button>
         </template>
       </el-table-column>
@@ -136,6 +137,15 @@ export default {
         this.getStar_articles(this.userid,this.current_page,this.pagesize)
         this.total()
       })
+    },
+    tableRowClassName({row, rowIndex}) {
+      if (row.article.state !== 'show') {
+        return 'warning-row';
+      } else if (row.article.state === 'show') {
+        return 'success-row';
+      }
+      console.log(row)
+      return '';
     }
   },
   mounted() {
@@ -151,5 +161,12 @@ export default {
 }
 .ac-btn{
   float: left;
+}
+/deep/ .el-table .warning-row {
+  background: #F56C6C;
+}
+
+/deep/ .el-table .success-row {
+  background: #f0f9eb;
 }
 </style>
