@@ -3,8 +3,9 @@
     <div class="side_bar">
       <el-scrollbar style="height: 100%;">
         <div v-for="(f,index) in focusList"
-             style="background-color: aliceblue;overflow: auto;border-radius: 3px;margin-top: 4px"
-             @click="chooseReceiver(f.id)">
+             style="background-color: aliceblue;overflow: auto;border-radius: 3px;margin-top: 4px;border-radius: 2px"
+             @click="chooseReceiver(f.id)"
+             v-if="f.state = 'using'">
           <el-avatar class="side_item" style="margin-top: 7px" :src="f.img" />
           <p class="side_item">{{ f.name }}</p>
         </div>
@@ -26,10 +27,11 @@
           </div>
         </div>
 
-        <p v-if="msgs.length == 0">你们还没有消息，跟他（她）打个招呼吧！</p>
+        <p v-if="msgs.length === 0 && receiver.state !== 'abandon'">你们还没有消息，跟他（她）打个招呼吧！</p>
+        <p v-if="receiver.state === 'abandon'">对方已被封禁！</p>
 
       </el-scrollbar>
-      <el-input class="msg_input" v-model="msgbody">
+      <el-input class="msg_input" v-model="msgbody" v-if="receiver.state !== 'abandon'">
         <el-button class="input-btn" slot="append" icon="el-icon-s-promotion" @click="giveMessage"></el-button>
       </el-input>
     </div>

@@ -11,7 +11,7 @@
                  round>
 
       </el-button></div>
-    <div v-html="articles.body">
+    <div v-html="articles.body" style="text-align: left">
 <!--      {{articles.body}}-->
     </div>
     <div  style="overflow: auto">
@@ -50,6 +50,13 @@
         <div style="overflow: auto">
           <el-avatar class="ac_title" :size="small" :src="c.user.img"></el-avatar>
           <p class="ac_title">{{ c.user.name }}</p>
+          <el-button
+            @click="deleteCommentclick(c.id)"
+            class="el-icon-delete"
+            style="margin-top: 5px;float: right"
+            v-if="loginUser.rule === 'admin' ||loginUser.rule === 'super_admin'">
+            删除
+          </el-button>
         </div>
         <div @click="clickroute()" style="overflow: auto">
           <p style="float: left;margin-left: 50px">{{ c.body }}</p>
@@ -69,6 +76,7 @@ export default {
   data(){
     return{
       login_id:this.$session.get("user_id"),
+      loginUser:'',
       //判断是否已关注
       isFouces:2,
       //判断是否点赞:1-已点赞，2-未点赞
@@ -326,6 +334,36 @@ export default {
           this.$message.error(e.data.msg)
         }
       })
+    },
+    //初始化当前登陆用户
+    initLoginUser(){
+      this.axios({
+        method:'get',
+        url:'/api/users/'+this.$session.get('user_id')
+      }).then((e)=>{
+        this.loginUser = e.data
+      })
+    },
+    //删除评论方法
+    deleteCommentclick(id){
+      this.$confirm('此操作将永久删除该评论, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.axios({
+          method:'delete',
+          url:'/api/comments/'+id
+        }).then((e)=>{
+          this.$message.info(e.data.msg)
+          this.initComments()
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        });
+      });
     }
   },
   mounted() {
@@ -334,6 +372,7 @@ export default {
     this.isCollect()
     this.isThumbed()
     this.initComments()
+    this.initLoginUser()
   }
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-table :data="articles" class="blocks_table">
-      <el-table-column class="col" width="150" label="作者">
+      <el-table-column class="col" width="200" label="作者">
         <template slot-scope="scope">
           <el-avatar :size="large" :src="scope.row.user.img"></el-avatar>
           <i class="el-icon-edit"></i>
@@ -64,7 +64,7 @@ export default {
   data(){
     return{
       articles:'',
-      pagesize:6,
+      pagesize:8,
       pageTotal:100,
       offset:0,
       select:'',

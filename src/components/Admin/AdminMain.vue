@@ -32,18 +32,11 @@
             <span slot="title">文章管理</span>
 
           </el-menu-item>
-          <el-menu-item :index="'/admin/comments'">
-
-            <i class="el-icon-setting"></i>
-
-            <span slot="title">评论管理</span>
-
-          </el-menu-item>
-<!--          <el-menu-item index="/user/permission">-->
+<!--          <el-menu-item :index="'/admin/comments'">-->
 
 <!--            <i class="el-icon-setting"></i>-->
 
-<!--            <span slot="title">消息管理</span>-->
+<!--            <span slot="title">评论管理</span>-->
 
 <!--          </el-menu-item>-->
 
